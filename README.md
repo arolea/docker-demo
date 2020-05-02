@@ -1,4 +1,4 @@
-# Docker Learning Repository #
+# Docker Demo Repository #
 
 ### Sample commands ###
 
