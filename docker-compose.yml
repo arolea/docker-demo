@@ -1,0 +1,26 @@
+# Version 3.X is meant to be used with Swarm, 2.X is better for simple dev since it supports resource limits
+version: "2.4"
+# You can define top-level networks and volumes, which can be reused across stacks
+services:
+  hello-world:
+    image: hello-world:1.0.0
+    # The expose directive could be used instead to bind only to the custom network bridge (no host binding)
+    ports:
+      - "8081:8081"
+    # Leverage the compose default custom network bridge DNS (hello-world-db) and internal port (3306)
+    environment:
+      - "spring.datasource.url=jdbc:mysql://hello-world-db:3306/hello_world"
+    # Good practice to use in dev so you can detect resource usage issues early
+    mem_limit: "1gb"
+  hello-world-db:
+    image: mysql:8.0.19
+    ports:
+      - "3308:3306"
+    environment:
+      - "MYSQL_USER=admin"
+      - "MYSQL_PASSWORD=admin"
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=hello_world"
+    # Provides a common cross platform location for the database volume (make sure it's added to the gitignore)
+    volumes:
+      - ./hello-world-db:/var/lib/mysql
