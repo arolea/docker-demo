@@ -7,7 +7,8 @@
 - Start the minikube dashboard: `minikube dashboard`
 - Destroy minikube (including any configurations): `minikube delete`
 - Get exposed URL for service: `minikube service hello-world-service --url`
-- Enable ingressL `minikube addons enable ingress`
+- Enable ingress (required by ingress controllers): `minikube addons enable ingress`
+- Enable metrics server (required by autoscaler): `minikube addons enable metrics-server`
 
 ## Kubectl commands ##
 

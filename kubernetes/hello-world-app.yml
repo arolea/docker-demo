@@ -3,7 +3,8 @@ kind: Deployment
 metadata:
   name: hello-world-deployment
 spec:
-  replicas: 3
+  # Replicas are defined by the autoscaler
+  # replicas: 3
   selector:
     matchLabels:
       app: hello-world
@@ -64,3 +65,37 @@ spec:
       port: 80
       targetPort: 8081
   type: NodePort
+
+---
+
+# Ingress controllers are an alternative to LBs
+# The ingress addon has to be enabled (for minikube usage)
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: helloworld-ingress-controller
+spec:
+  rules:
+    - host: helloworld.example.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: hello-world-service
+              servicePort: 80
+
+---
+
+# Metrics server has to be enabled
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-hello-world-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hello-world-deployment
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
