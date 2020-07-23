@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-db
+  template:
+    metadata:
+      labels:
+        app: hello-world-db
+    spec:
+      containers:
+        - name: hello-world-db
+          image: mysql:5.7
+          ports:
+            - name: db-port
+              containerPort: 3306
+          # Secrets can also be passed via a file in a volume
+          env:
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db.username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db.password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db.database
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db.root.password
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-db-service
+spec:
+  selector:
+    app: hello-world-db
+  ports:
+    - protocol: TCP
+      port: 3306
+  type: NodePort
