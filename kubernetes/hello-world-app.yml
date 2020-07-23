@@ -19,6 +19,7 @@ spec:
           ports:
             - name: hello-port
               containerPort: 8081
+          # ConfigMaps can be used if you want to pass a configuration file (ex: JSON) to a service
           env:
             - name: spring.datasource.url
               # Use the service name of the database pod to leverage the Kubernetes DNS service
