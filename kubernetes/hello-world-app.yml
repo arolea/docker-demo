@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: hello-world-deployment
 spec:
-  # Replicas are defined by the autoscaler
+  # If using autoscaling, the replica count is defined by the autoscaler (comment if autoscaling is enabled)
   # replicas: 3
   selector:
     matchLabels:
@@ -31,7 +31,6 @@ spec:
                   name: config-properties
                   key: app.name
             - name: spring.datasource.url
-              # Use the service name of the database pod to leverage the Kubernetes DNS service
               value: jdbc:mysql://hello-world-db-service:3306/hello-db
             - name: spring.datasource.username
               valueFrom:
@@ -43,14 +42,12 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: db.password
-          # Detect unhealthy instances
           livenessProbe:
             httpGet:
               path: /hello
               port: hello-port
             initialDelaySeconds: 60
             timeoutSeconds: 5
-          # Wait for service init before routing traffic to instance
           readinessProbe:
             httpGet:
               path: /hello
@@ -76,8 +73,7 @@ spec:
 
 ---
 
-# Ingress controllers are an alternative to LBs
-# The ingress addon has to be enabled (for minikube usage)
+# The ingress addon has to be enabled
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -94,7 +90,7 @@ spec:
 
 ---
 
-# Metrics server has to be enabled
+# The metrics server addon has to be enabled
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
