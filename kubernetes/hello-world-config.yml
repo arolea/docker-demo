@@ -12,3 +12,12 @@ data:
   db.database: aGVsbG8tZGI=
   # Base 64 encoded value for the root password (password)
   db.root.password: cGFzc3dvcmQ=
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-properties
+data:
+  app.name: "hello-world"

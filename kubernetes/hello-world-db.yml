@@ -52,7 +52,6 @@ spec:
           volumeMounts:
             - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
-          # Secrets can also be passed via a file in a volume
           env:
             - name: MYSQL_USER
               valueFrom:
