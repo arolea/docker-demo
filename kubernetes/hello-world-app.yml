@@ -5,6 +5,7 @@ metadata:
 spec:
   # If using autoscaling, the replica count is defined by the autoscaler (comment if autoscaling is enabled)
   replicas: 3
+  revisionHistoryLimit: 5
   selector:
     matchLabels:
       app: hello-world
@@ -15,6 +16,7 @@ spec:
     spec:
       containers:
         - name: hello-world-container
+          # There are two images, alexrolea/hello-world:1.0.0 and alexrolea/hello-world:2.0.0
           image: alexrolea/hello-world:1.0.0
           imagePullPolicy: Always
           ports:
