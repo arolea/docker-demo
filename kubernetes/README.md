@@ -34,12 +34,13 @@
 - Start the minikube dashboard to visualize the cluster state: `minikube dashboard`
 - Enable ingress: `minikube addons enable ingress`
 - Enable metrics server: `minikube addons enable metrics-server`
-- Create the Kubernetes objects: `kubectl apply -f ./hello-world-config.yml` and `kubectl apply -f ./hello-world-db.yml` and `kubectl apply -f ./hello-world-app.yml`
+- Create the Kubernetes objects (ensure there's a single replica for the microservice in the first place): `kubectl apply -f ./hello-world-config.yml` and `kubectl apply -f ./hello-world-db.yml` and `kubectl apply -f ./hello-world-app.yml`
 - Get the minikube IP: `minikube ip`
 - Get the ports on which services are exposed: `kubectl get services`
 - Invoke the deployed service: `curl --location --request GET 'http://172.17.0.3:31296/hello'`
 - Test ingress: `curl 172.17.0.3/hello -H 'Host: helloworld.example.com'`
-- Increase the number of replicas to 3 and invoke the deployed service: `curl --location --request GET 'http://172.17.0.3:31296/hello'`
+- Increase the number of replicas (modify the deployment file): `kubectl apply -f <path-to-file>`
+- Invoke the deployed service: `curl --location --request GET 'http://172.17.0.3:31296/hello'`
 - Do a rolling upgrade to V2 (modify the deployment file): `kubectl apply -f <path-to-file>`
 - Get the deployment revision history: `kubectl rollout history deployment/hello-world-deployment`
 - Invoke the deployed service: `curl --location --request GET 'http://172.17.0.3:31296/hello'`
