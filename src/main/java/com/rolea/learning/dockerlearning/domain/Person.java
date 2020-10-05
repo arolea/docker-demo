@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "person")
@@ -23,7 +24,8 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return personId.equals(person.personId) &&
+        return personId != null &&
+                personId.equals(person.personId) &&
                 name.equals(person.name);
     }
 
@@ -31,4 +33,5 @@ public class Person {
     public int hashCode() {
         return 31;
     }
+    
 }
