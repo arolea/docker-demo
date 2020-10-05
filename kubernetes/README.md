@@ -39,6 +39,7 @@
 - Get the ports on which services are exposed: `kubectl get services`
 - Invoke the deployed service: `curl --location --request GET 'http://172.17.0.3:31296/hello'`
 - Test ingress: `curl 172.17.0.3/hello -H 'Host: helloworld.example.com'`
+- Increase the number of replicas to 3 and invoke the deployed service: `curl --location --request GET 'http://172.17.0.3:31296/hello'`
 - Do a rolling upgrade to V2 (modify the deployment file): `kubectl apply -f <path-to-file>`
 - Get the deployment revision history: `kubectl rollout history deployment/hello-world-deployment`
 - Invoke the deployed service: `curl --location --request GET 'http://172.17.0.3:31296/hello'`

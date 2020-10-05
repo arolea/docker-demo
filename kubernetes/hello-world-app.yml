@@ -4,7 +4,7 @@ metadata:
   name: hello-world-deployment
 spec:
   # If using autoscaling, the replica count is defined by the autoscaler (comment if autoscaling is enabled)
-  replicas: 3
+  replicas: 1
   revisionHistoryLimit: 5
   selector:
     matchLabels:
